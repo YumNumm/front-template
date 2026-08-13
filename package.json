@@ -2,7 +2,9 @@
   "name": "front-template",
   "private": true,
   "packageManager": "pnpm@10.14.0",
+  "engineStrict": true,
   "scripts": {
+    "preinstall": "node ./scripts/ensure-pnpm.mjs",
     "dev": "turbo run dev",
     "build": "turbo run build",
     "check-types": "turbo run check-types",
@@ -14,7 +16,10 @@
     "check": "pnpm lint && pnpm format && pnpm check-types && pnpm test"
   },
   "engines": {
-    "node": "^22.15.0 || >=23.5.0"
+    "node": "^22.15.0 || >=23.5.0",
+    "pnpm": ">=10.14.0",
+    "npm": "please-use-pnpm",
+    "yarn": "please-use-pnpm"
   },
   "devDependencies": {
     "@typescript/native-preview": "7.0.0-dev.20260707.2",
