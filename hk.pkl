@@ -8,30 +8,30 @@ local workflowGlobs = List(".github/workflows/**/*.yml", ".github/workflows/**/*
 local linters = new Mapping<String, Step> {
     ["util-check-merge-conflict"] {
         glob = utilFileGlobs
-        check = "mise exec -- hk util check-merge-conflict {{files}}"
+        check = "hk util check-merge-conflict {{files}}"
     }
     ["util-check-symlinks"] {
         glob = utilFileGlobs
-        check = "mise exec -- hk util check-symlinks {{files}}"
+        check = "hk util check-symlinks {{files}}"
     }
     ["util-detect-private-key"] {
         glob = utilFileGlobs
-        check = "mise exec -- hk util detect-private-key {{files}}"
+        check = "hk util detect-private-key {{files}}"
     }
     ["gitleaks"] {
-        check = "mise exec -- gitleaks git --staged --redact=100 --baseline-path .gitleaks.baseline.json"
+        check = "gitleaks git --staged --redact=100 --baseline-path .gitleaks.baseline.json"
     }
     ["zizmor"] {
         glob = workflowGlobs
-        check = "mise exec -- zizmor {{files}}"
+        check = "zizmor {{files}}"
     }
     ["pinact"] {
         glob = workflowGlobs
-        check = "mise exec -- pinact run --check {{files}}"
+        check = "pinact run --check {{files}}"
     }
     ["shellcheck"] {
         glob = List("**/*.sh", "**/*.bash")
-        check = "mise exec -- shellcheck -S error {{files}}"
+        check = "shellcheck -S error {{files}}"
     }
 }
 
