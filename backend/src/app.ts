@@ -3,6 +3,7 @@ import type { Env } from './env';
 import { Hono } from 'hono';
 
 import { createAuth } from './lib/auth';
+import { usersRoutes } from './routes/v1/users';
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -13,6 +14,7 @@ app.on(['GET', 'POST'], '/api/auth/*', c => {
 
 const v1 = new Hono<{ Bindings: Env }>();
 v1.get('/health', c => c.json({ ok: true as const }));
+v1.route('/users', usersRoutes);
 
 app.route('/api/v1', v1);
 
