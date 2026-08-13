@@ -33,7 +33,7 @@ jobs:
       - name: Run pinact
         id: pinact
         background: true
-        run: mise exec -- pinact run --check .github/workflows/*.yml
+        run: mise exec -- pinact run --check .github/workflows/*.yaml
 
       - name: Run actionlint
         id: actionlint
