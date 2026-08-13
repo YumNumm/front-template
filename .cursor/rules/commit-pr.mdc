@@ -1,0 +1,11 @@
+---
+description: Commit and PR conventions for this repository
+alwaysApply: true
+---
+
+# Commits and PRs
+
+- Commit with appropriate granularity (prefer ~30–100 lines of meaningful diff per commit when practical).
+- Commit message: English one-word prefix + concise Japanese subject (eqmonitor style), e.g. `chore: pnpm 以外のパッケージマネージャを禁止する`
+- When creating a PR, title format: `[TOPIC] 概要`
+- Do not use `npm` / bare package managers; see package-manager rule.

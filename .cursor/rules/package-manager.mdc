@@ -1,0 +1,20 @@
+---
+description: Always run package manager commands through mise + pnpm
+alwaysApply: true
+---
+
+# Package manager
+
+- **Always** use `mise exec -- pnpm …` for install, add, remove, run, exec, and filter commands.
+- Never use `npm`, `yarn`, `bun`, or bare `pnpm` / `npx` when mise-managed tools should run.
+- Never hand-edit dependency version ranges in `package.json` / lockfiles; change deps with `mise exec -- pnpm add` / `pnpm add -D` / `pnpm remove`.
+- Prefer filter form for workspace packages: `mise exec -- pnpm --filter @front-template/<pkg> …`
+
+Examples:
+
+```bash
+mise exec -- pnpm install
+mise exec -- pnpm add -Dw turbo
+mise exec -- pnpm --filter @front-template/backend add hono
+mise exec -- pnpm --filter @front-template/frontend dev
+```
