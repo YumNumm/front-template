@@ -4,9 +4,7 @@ import { Hono } from 'hono';
 
 import { createAuth } from '../../lib/auth';
 
-export const usersRoutes = new Hono<{ Bindings: Env }>();
-
-usersRoutes.get('/me', async c => {
+export const usersRoutes = new Hono<{ Bindings: Env }>().get('/me', async c => {
   const auth = createAuth(c.env);
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
 

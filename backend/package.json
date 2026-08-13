@@ -2,6 +2,10 @@
   "name": "@front-template/backend",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./app": "./src/app.ts"
+  },
   "scripts": {
     "dev": "wrangler dev",
     "build": "wrangler deploy --dry-run",

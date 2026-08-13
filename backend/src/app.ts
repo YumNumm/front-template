@@ -5,18 +5,16 @@ import { Hono } from 'hono';
 import { createAuth } from './lib/auth';
 import { usersRoutes } from './routes/v1/users';
 
-const app = new Hono<{ Bindings: Env }>();
+const v1 = new Hono<{ Bindings: Env }>()
+  .get('/health', c => c.json({ ok: true as const }))
+  .route('/users', usersRoutes);
 
-app.on(['GET', 'POST'], '/api/auth/*', c => {
-  const auth = createAuth(c.env);
-  return auth.handler(c.req.raw);
-});
-
-const v1 = new Hono<{ Bindings: Env }>();
-v1.get('/health', c => c.json({ ok: true as const }));
-v1.route('/users', usersRoutes);
-
-app.route('/api/v1', v1);
+const app = new Hono<{ Bindings: Env }>()
+  .on(['GET', 'POST'], '/api/auth/*', c => {
+    const auth = createAuth(c.env);
+    return auth.handler(c.req.raw);
+  })
+  .route('/api/v1', v1);
 
 export { app };
 export type AppType = typeof app;
