@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+
+@layer base {
+  body {
+    margin: 0;
+    min-width: 320px;
+    background: #fafafa;
+    color: #171717;
+    font-family: system-ui, sans-serif;
+  }
+
+  a {
+    color: inherit;
+  }
+}

@@ -1,6 +1,12 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": ["dist", ".output", ".tanstack", "*.yaml"],
+  "ignorePatterns": [
+    "dist",
+    ".output",
+    ".tanstack",
+    "*.yaml",
+    "**/routeTree.gen.ts"
+  ],
   "arrowParens": "avoid",
   "singleQuote": true,
   "jsxSingleQuote": true,

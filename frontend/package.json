@@ -3,10 +3,31 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "echo 'stub: dev'",
-    "build": "echo 'stub: build'",
-    "check-types": "echo 'stub: check-types'",
-    "test": "echo 'stub: test'",
-    "deploy": "echo 'stub: deploy'"
+    "dev": "vite",
+    "build": "vite build",
+    "check-types": "tsgo --noEmit",
+    "test": "echo 'No tests yet'",
+    "deploy": "vite build && wrangler deploy"
+  },
+  "dependencies": {
+    "@front-template/api": "workspace:*",
+    "@tanstack/react-router": "^1.170.27",
+    "@tanstack/react-start": "^1.168.44",
+    "better-auth": "^1.6.27",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.52.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@typescript/native-preview": "7.0.0-dev.20260707.2",
+    "@vitejs/plugin-react": "^6.0.5",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.1",
+    "vite-tsconfig-paths": "^6.1.1",
+    "wrangler": "^4.122.0"
   }
 }
