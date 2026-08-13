@@ -21,21 +21,36 @@ jobs:
           persist-credentials: false
 
       - name: Install tools
-        uses: jdx/mise-action@9e7f7633ff6f6d6048a9418a68d48f288f50eb14 # v4.2.3
+        uses: jdx/mise-action@7e36c90d9ab29c415a2384db3006f3ec8a8cc654 # v4.2.4
         with:
           install_args: gitleaks pinact actionlint zizmor
 
       - name: Run gitleaks
+        id: gitleaks
+        background: true
         run: mise exec -- gitleaks git --redact=100 --baseline-path .gitleaks.baseline.json
 
       - name: Run pinact
+        id: pinact
+        background: true
         run: mise exec -- pinact run --check .github/workflows/*.yml
 
       - name: Run actionlint
+        id: actionlint
+        background: true
         run: mise exec -- actionlint
 
       - name: Run zizmor
+        id: zizmor
+        background: true
         run: mise exec -- zizmor .github/workflows
+
+      - name: Wait for background jobs to complete
+        wait:
+          - gitleaks
+          - pinact
+          - actionlint
+          - zizmor
 
   check:
     name: Project checks
@@ -50,7 +65,7 @@ jobs:
           persist-credentials: false
 
       - name: Install tools
-        uses: jdx/mise-action@9e7f7633ff6f6d6048a9418a68d48f288f50eb14 # v4.2.3
+        uses: jdx/mise-action@7e36c90d9ab29c415a2384db3006f3ec8a8cc654 # v4.2.4
 
       - name: Install dependencies
         run: mise exec -- pnpm install --frozen-lockfile
