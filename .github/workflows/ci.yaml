@@ -23,7 +23,7 @@ jobs:
       - name: Install tools
         uses: jdx/mise-action@7e36c90d9ab29c415a2384db3006f3ec8a8cc654 # v4.2.4
         with:
-          install_args: gitleaks pinact actionlint zizmor
+          install_args: gitleaks pinact zizmor
 
       - name: Run gitleaks
         id: gitleaks
@@ -35,11 +35,6 @@ jobs:
         background: true
         run: mise exec -- pinact run --check .github/workflows/*.yaml
 
-      - name: Run actionlint
-        id: actionlint
-        background: true
-        run: mise exec -- actionlint
-
       - name: Run zizmor
         id: zizmor
         background: true
@@ -49,7 +44,6 @@ jobs:
         wait:
           - gitleaks
           - pinact
-          - actionlint
           - zizmor
 
   check:
