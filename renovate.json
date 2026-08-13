@@ -3,8 +3,32 @@
   "extends": ["config:recommended"],
   "timezone": "Asia/Tokyo",
   "dependencyDashboard": true,
-  "enabledManagers": ["mise", "npm", "github-actions"],
+  "enabledManagers": ["mise", "npm", "github-actions", "custom.regex"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Root packageManager を mise の pnpm と同期する",
+      "managerFilePatterns": ["/^package\\.json$/"],
+      "matchStrings": [
+        "\"packageManager\":\\s*\"pnpm@(?<currentValue>[^\"]+)\""
+      ],
+      "depNameTemplate": "pnpm",
+      "datasourceTemplate": "npm",
+      "versioningTemplate": "npm"
+    }
+  ],
   "packageRules": [
+    {
+      "description": "npm manager 経由の packageManager 更新は無効（regex + mise で扱う）",
+      "matchPackageNames": ["pnpm"],
+      "matchManagers": ["npm"],
+      "enabled": false
+    },
+    {
+      "description": "mise.toml と packageManager の pnpm を同一 PR にまとめる",
+      "matchPackageNames": ["pnpm"],
+      "groupName": "pnpm"
+    },
     {
       "description": "patch は PR 作成後、CI 通過で自動マージ",
       "matchUpdateTypes": ["patch"],

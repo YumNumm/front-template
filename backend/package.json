@@ -18,14 +18,14 @@
   "dependencies": {
     "better-auth": "^1.6.27",
     "drizzle-orm": "^0.45.2",
-    "hono": "^4.13.2"
+    "hono": "^4.13.1"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20260813.1",
+    "@cloudflare/workers-types": "^5.20260812.1",
     "@typescript/native-preview": "7.0.0-dev.20260707.2",
     "drizzle-kit": "^0.31.10",
     "typescript": "^7.0.2",
     "vitest": "^4.1.10",
-    "wrangler": "^4.123.0"
+    "wrangler": "^4.122.0"
   }
 }
