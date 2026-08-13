@@ -23,12 +23,12 @@
 | Auth | Better Auth, Google OAuth only |
 | CF resources (initial) | Workers ×2, D1, R2, secrets/vars |
 | Environments | Single prod + local dev |
-| Sample features | Login + protected page showing `GET /api/me` session/user/token summary |
+| Sample features | Login + protected page showing `GET /api/v1/users/me` session/user/token summary |
 | Repo shape | Monorepo: `frontend` / `backend` / `packages/api` / infra |
 | API boundary | Separate Hono Worker; frontend uses Hono RPC |
-| Edge routing | Same host: `/` → frontend, `/api/*` → backend + Service Binding |
+| Edge routing | Same host `template.yumnumm.dev`: `/` → frontend, `/api/*` → backend + Service Binding |
 | Rendering default | Hybrid (SSR shell; post-auth data mainly client RPC) |
-| Secrets | sops + GCP KMS (OpenTofu); decrypt → Workers secrets |
+| Secrets | sops + GCP KMS; encrypted file `.env.enc.json`; decrypt → Workers secrets |
 | CI/CD | PR checks + Cloudflare deploy via GitHub OIDC |
 | Quality gates | eqmonitor-like: gitleaks, pinact, zizmor, shellcheck via `hk` + CI |
 | Docs / agents | Thin `AGENTS.md` + setup docs (eqmonitor-inspired, no Aegis) |
@@ -36,7 +36,7 @@
 ## Architecture
 
 ```
-Browser (same-origin)
+Browser (same-origin: `template.yumnumm.dev`)
   ├─ /        → frontend Worker (TanStack Start: SSR shell + UI)
   └─ /api/*   → backend Worker  (Hono: Better Auth, D1, R2 bindings)
                     ▲
@@ -44,12 +44,13 @@ Browser (same-origin)
                  frontend Worker
 ```
 
+**Production hostname:** `template.yumnumm.dev` (Cloudflare zone route / custom domain). Local dev does not require this host.
 ### Responsibilities
 
 | Unit | Does | Depends on |
 |------|------|------------|
 | `frontend/` | TanStack Start app, Tailwind v4, shadcn/ui, login UI, protected demo page | `packages/api`, CF bindings (service binding to backend) |
-| `backend/` | Hono app, Better Auth (Google), Drizzle schema + D1, session/me API, R2 binding wiring only | D1, R2, auth secrets |
+| `backend/` | Hono app, Better Auth (Google), Drizzle schema + D1, `GET /api/v1/users/me`, R2 binding wiring only | D1, R2, auth secrets |
 | `packages/api/` | Re-export Hono `AppType` from `backend` and provide RPC client factory (browser + optional binding fetcher). Owns no CF runtime. | `backend` types only (workspace dep); must not pull Workers runtime into the client bundle |
 | `infra/terraform/cloudflare/` | Workers, D1, R2, routes/path split, service binding, worker secrets wiring inputs | Cloudflare account |
 | `infra/terraform/googlecloud/` | KMS key ring / crypto key for sops | GCP project |
@@ -65,7 +66,7 @@ TanStack Start stays on the frontend Worker only.
 | CSR-heavy | Optional later for admin-like apps |
 | SSR with data | Frontend server calls backend via Service Binding during render |
 
-Initial sample stays hybrid with **client RPC for `/me`-style data**.
+Initial sample stays hybrid with **client RPC for `GET /api/v1/users/me`**.
 
 ## Repository layout
 
@@ -87,7 +88,7 @@ Initial sample stays hybrid with **client RPC for `/me`-style data**.
 ├── pnpm-workspace.yaml
 ├── turbo.json
 ├── .sops.yaml
-├── secrets.enc.yaml               # example encrypted secrets
+├── .env.enc.json                  # sops-encrypted secrets (JSON)
 ├── .github/workflows/
 ├── .vscode/
 └── .gitattributes
@@ -119,11 +120,15 @@ Package manager is **pnpm** (not Bun). Git hooks are **hk** (not lefthook).
 
 1. User opens login UI on `frontend`.
 2. Better Auth client calls `/api/auth/*` on `backend` (same origin).
-3. Google OAuth completes; session cookie set for the shared host.
+3. Google OAuth completes; session cookie set for `template.yumnumm.dev` (prod) or local origin.
 4. Protected route redirects unauthenticated users to login.
-5. Demo page calls RPC `GET /api/me` (name fixed) and displays a JSON summary.
+5. Demo page calls RPC `GET /api/v1/users/me` (name fixed) and displays a JSON summary.
 
-**`GET /api/me` response (explicit):** authenticated Better Auth session payload safe for the demo UI — at minimum `user` (`id`, `name`, `email`, `image`) and `session` (`id`, `expiresAt`, and session `token` if exposed by Better Auth’s server session API). No Google raw id_token juggling in v1 unless Better Auth already surfaces it on the session object; if not available, document that the page shows **session token + user**, which satisfies the “token info” demo intent.
+Google OAuth redirect / trusted origins include `https://template.yumnumm.dev` (and local dev origin).
+
+**`GET /api/v1/users/me` response (explicit):** authenticated Better Auth session payload safe for the demo UI — at minimum `user` (`id`, `name`, `email`, `image`) and `session` (`id`, `expiresAt`, and session `token` if exposed by Better Auth’s server session API). No Google raw id_token juggling in v1 unless Better Auth already surfaces it on the session object; if not available, document that the page shows **session token + user**, which satisfies the “token info” demo intent.
+
+API versioning: app routes live under `/api/v1/*`. Better Auth remains at `/api/auth/*` (library convention).
 
 **Out of sample scope:** profile editing, avatar upload UI, email/password.
 
@@ -140,16 +145,16 @@ Package manager is **pnpm** (not Bun). Git hooks are **hk** (not lefthook).
 
 ### Testing (v1)
 
-- `backend`: auth guard + `/me`-equivalent tests (Vitest)
+- `backend`: auth guard + `GET /api/v1/users/me` tests (Vitest)
 - `frontend`: protected-route redirect / smoke tests
 - **No E2E** in initial template
 
 ## Secrets
 
 - `.sops.yaml` targets GCP KMS (key created by `infra/terraform/googlecloud`)
-- Encrypted example file (e.g. `secrets.enc.yaml`) holds Better Auth secret, Google OAuth client id/secret, etc.
-- Docs describe: decrypt with sops → `wrangler secret put` (or scripted equivalent)
-- CI deploy uses OIDC → GCP to decrypt, then deploy Workers with secrets applied (see CI/CD)
+- Encrypted secrets file is **`.env.enc.json`** (JSON). Holds Better Auth secret, Google OAuth client id/secret, etc.
+- Docs describe: `sops -d .env.enc.json` → `wrangler secret put` (or scripted equivalent)
+- CI deploy uses OIDC → GCP to decrypt `.env.enc.json`, then deploy Workers with secrets applied (see CI/CD)
 
 ## CI/CD
 
@@ -179,9 +184,9 @@ Each stack under `infra/terraform/<provider>/` contains at least:
 - Two Workers (frontend, backend)
 - D1 database bound to backend
 - R2 bucket bound to backend
-- Route/path configuration on a single hostname variable: `/` → frontend, `/api/*` → backend  
-  - Path split **requires a routable hostname** (custom domain or zone route). Plain independent `*.workers.dev` URLs alone cannot express same-origin `/` + `/api/*` across two Workers.  
-  - OpenTofu takes `hostname` (and zone/account inputs) as variables; forking docs explain bootstrap. Local dev uses Vite/wrangler without needing that hostname.
+- Route/path configuration on **`template.yumnumm.dev`**: `/` → frontend, `/api/*` → backend  
+  - Path split requires this routable hostname (zone custom domain / route). Plain independent `*.workers.dev` URLs alone cannot express same-origin `/` + `/api/*` across two Workers.  
+  - OpenTofu encodes `template.yumnumm.dev` (zone/account as variables or locals). Forking docs explain how to change the hostname. Local dev uses Vite/wrangler without needing that host.
 - Service Binding: frontend → backend
 - Inputs for secret names (values from sops/CI, not plaintext in state when avoidable)
 
@@ -215,17 +220,18 @@ Optional light `.claude/` may be omitted in v1 unless needed for mise/hk parity;
 - Queues, KV, Analytics scaffolds
 - Aegis / strict agent commit pipeline
 - E2E browser tests
-- Shipping a real production hostname for the user (template provides variables + docs only)
+- Changing production hostname away from `template.yumnumm.dev` without updating tofu + auth callback URLs (forking docs cover the rename)
 - Independent dual `*.workers.dev` same-origin illusion (not supported; see cloudflare routes note)
 
 ## Success criteria
 
 1. `mise install && pnpm install` then local `pnpm dev` serves app with CF bindings.
 2. Google login works against local/prod backend; protected page shows session/token info via Hono RPC.
-3. `pnpm` check scripts + `hk` hooks catch format/lint/secret issues.
-4. OpenTofu stacks apply for cloudflare / googlecloud / github (with documented prerequisites).
-5. CI runs checks on PR; deploy workflow ships both Workers to Cloudflare via OIDC.
-6. Forking docs explain renaming workspace scope, secrets, and Cloudflare/GCP/GitHub bootstrap.
+3. Production deploy serves `https://template.yumnumm.dev` with `/` and `/api/*` on the same origin.
+4. `pnpm` check scripts + `hk` hooks catch format/lint/secret issues.
+5. OpenTofu stacks apply for cloudflare / googlecloud / github (with documented prerequisites).
+6. CI runs checks on PR; deploy workflow ships both Workers to Cloudflare via OIDC.
+7. Forking docs explain renaming workspace scope, secrets, hostname, and Cloudflare/GCP/GitHub bootstrap.
 
 ## Implementation notes (non-binding)
 
