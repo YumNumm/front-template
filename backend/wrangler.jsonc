@@ -21,6 +21,6 @@
   // Configure BETTER_AUTH_SECRET, GOOGLE_CLIENT_ID, and GOOGLE_CLIENT_SECRET
   // with `wrangler secret put <NAME>` for each deployment environment.
   "vars": {
-    "BETTER_AUTH_URL": "http://localhost:8787",
+    "BETTER_AUTH_URL": "http://localhost:3000",
   },
 }
