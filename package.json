@@ -5,7 +5,7 @@
   "engineStrict": true,
   "scripts": {
     "preinstall": "node ./scripts/ensure-pnpm.mjs",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --parallel",
     "build": "turbo run build",
     "check-types": "turbo run check-types",
     "test": "turbo run test",
