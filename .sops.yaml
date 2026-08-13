@@ -1,0 +1,3 @@
+creation_rules:
+  - path_regex: \.env\.enc\.json$
+    gcp_kms: projects/home8s/locations/global/keyRings/front-template/cryptoKeys/sops

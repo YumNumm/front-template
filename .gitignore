@@ -13,6 +13,7 @@ dist/
 .env.*
 !.env.example
 !.env.enc.json
+!.env.json.example
 
 .dev.vars
 **/.dev.vars
