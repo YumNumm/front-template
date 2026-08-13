@@ -1,0 +1,11 @@
+{
+  "name": "@front-template/api",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@front-template/backend": "workspace:*"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@front-template/backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'stub: dev'",
+    "build": "echo 'stub: build'",
+    "check-types": "echo 'stub: check-types'",
+    "test": "echo 'stub: test'",
+    "deploy": "echo 'stub: deploy'"
+  }
+}

@@ -1,0 +1,22 @@
+[tools]
+node = "22"
+pnpm = "10.14.0"
+hk = "latest"
+pkl = "latest"
+sops = "latest"
+gcloud = "latest"
+opentofu = "1.12.0"
+gitleaks = "latest"
+pinact = "latest"
+zizmor = "latest"
+actionlint = "latest"
+shellcheck = "latest"
+
+[settings]
+experimental = true
+
+[env]
+HK_MISE = "1"
+
+[hooks]
+postinstall = "hk install --mise"
