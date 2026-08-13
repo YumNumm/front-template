@@ -5,7 +5,18 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "scripts": {
+    "check-types": "tsgo --noEmit",
+    "test": "vitest run"
+  },
   "dependencies": {
-    "@front-template/backend": "workspace:*"
+    "@front-template/backend": "workspace:*",
+    "hono": "^4.13.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260813.1",
+    "@typescript/native-preview": "7.0.0-dev.20260707.2",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
   }
 }

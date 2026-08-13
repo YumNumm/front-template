@@ -2,11 +2,30 @@
   "name": "@front-template/backend",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./app": "./src/app.ts"
+  },
   "scripts": {
-    "dev": "echo 'stub: dev'",
-    "build": "echo 'stub: build'",
-    "check-types": "echo 'stub: check-types'",
-    "test": "echo 'stub: test'",
-    "deploy": "echo 'stub: deploy'"
+    "dev": "wrangler dev",
+    "build": "wrangler deploy --dry-run",
+    "check-types": "tsgo --noEmit",
+    "test": "vitest run",
+    "db:generate": "drizzle-kit generate",
+    "db:push:local": "wrangler d1 migrations apply front-template-db --local",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "better-auth": "^1.6.27",
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.13.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260813.1",
+    "@typescript/native-preview": "7.0.0-dev.20260707.2",
+    "drizzle-kit": "^0.31.10",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10",
+    "wrangler": "^4.122.0"
   }
 }
