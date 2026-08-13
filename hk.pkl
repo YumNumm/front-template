@@ -1,0 +1,46 @@
+amends "package://github.com/jdx/hk/releases/download/v1.42.0/hk@1.42.0#/Config.pkl"
+
+// Staged paths for hk util helpers (see https://hk.jdx.dev/cli/util.html )
+local utilFileGlobs = List("**/*")
+
+local workflowGlobs = List(".github/workflows/**/*.yml", ".github/workflows/**/*.yaml")
+
+local linters = new Mapping<String, Step> {
+    ["util-check-merge-conflict"] {
+        glob = utilFileGlobs
+        check = "mise exec -- hk util check-merge-conflict {{files}}"
+    }
+    ["util-check-symlinks"] {
+        glob = utilFileGlobs
+        check = "mise exec -- hk util check-symlinks {{files}}"
+    }
+    ["util-detect-private-key"] {
+        glob = utilFileGlobs
+        check = "mise exec -- hk util detect-private-key {{files}}"
+    }
+    ["gitleaks"] {
+        check = "mise exec -- gitleaks git --staged --redact=100 --baseline-path .gitleaks.baseline.json"
+    }
+    ["zizmor"] {
+        glob = workflowGlobs
+        check = "mise exec -- zizmor {{files}}"
+    }
+    ["pinact"] {
+        glob = workflowGlobs
+        check = "mise exec -- pinact run --check {{files}}"
+    }
+    ["shellcheck"] {
+        glob = List("**/*.sh", "**/*.bash")
+        check = "mise exec -- shellcheck -S error {{files}}"
+    }
+}
+
+hooks {
+    ["pre-commit"] {
+        fix = false
+        steps = linters
+    }
+    ["check"] {
+        steps = linters
+    }
+}

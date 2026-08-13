@@ -1,1 +1,14 @@
 .worktrees/
+.superpowers/
+
+node_modules/
+dist/
+.turbo/
+.output/
+.tanstack/
+.DS_Store
+
+.env
+.env.*
+!.env.example
+!.env.enc.json

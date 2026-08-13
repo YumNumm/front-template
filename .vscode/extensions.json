@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "DavidAnson.vscode-markdownlint",
+    "oxc.oxc-vscode",
+    "typescriptteam.native-preview",
+    "hverlin.mise-vscode",
+    "tombi-toml.tombi",
+    "opentofu.vscode-opentofu"
+  ]
+}
