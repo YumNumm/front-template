@@ -9,4 +9,4 @@ allowBuilds:
   workerd: true
 minimumReleaseAge: 1440
 overrides:
-  baseline-browser-mapping: 2.11.13
+  baseline-browser-mapping: 2.11.14
