@@ -31,6 +31,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Documentation
 
+- [Getting started](docs/GETTING_STARTED.md)
 - [Database setup](docs/DATABASE_SETUP.md)
 - [Deployment](docs/DEPLOYMENT.md)
 - [Forking checklist](docs/FORKING.md)
