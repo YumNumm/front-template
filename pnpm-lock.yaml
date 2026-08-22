@@ -43,7 +43,7 @@ importers:
         version: 0.45.2(@cloudflare/workers-types@5.20260812.1)(@prisma/client@5.22.0)(@types/pg@8.21.0)(better-sqlite3@12.11.1)(kysely@0.29.5)(pg@8.23.0)
       hono:
         specifier: ^4.13.1
-        version: 4.13.1
+        version: 4.13.3
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^5.20260812.1
@@ -132,7 +132,7 @@ importers:
         version: link:../../backend
       hono:
         specifier: ^4.13.1
-        version: 4.13.1
+        version: 4.13.3
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^5.20260812.1
@@ -2439,8 +2439,8 @@ packages:
       crossws:
         optional: true
 
-  hono@4.13.1:
-    resolution: {integrity: sha512-kdJoFVv2xmayw6cY09H7AbMJMt8Jn5jdlEdXsP7AGBdF2DIptVlKlOLKXP41yPip4/a3yQPv9gVcJYI8YY04dw==}
+  hono@4.13.3:
+    resolution: {integrity: sha512-r8AO2mYHoLxSHkgafNeC/BXyb2vWRxD3jem4Ts+ptav8oTG5FIRifAjuJEmZI4bSvvc2ns0GxmIYiZnHqN3mMw==}
     engines: {node: '>=16.9.0'}
 
   ieee754@1.2.1:
@@ -4867,7 +4867,7 @@ snapshots:
       rou3: 0.8.1
       srvx: 0.11.22
 
-  hono@4.13.1: {}
+  hono@4.13.3: {}
 
   ieee754@1.2.1:
     optional: true
