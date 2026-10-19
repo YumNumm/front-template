@@ -15,7 +15,7 @@ concurrency:
 jobs:
   deploy:
     name: Deploy to Cloudflare
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 15
     environment: production
     permissions:
