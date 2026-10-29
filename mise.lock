@@ -65,38 +65,44 @@ url = "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8
 url_api = "https://api.github.com/repos/gitleaks/gitleaks/releases/assets/378333178"
 
 [[tools.hk]]
-version = "1.55.0"
+version = "2.9.0"
 backend = "aqua:jdx/hk"
 
 [tools.hk."platforms.linux-arm64"]
-checksum = "sha256:64c44aa0f26e995f7d9c44cc9c5116e20052bcefc821daf17ce3df265bb0b2d6"
-url = "https://github.com/jdx/hk/releases/download/v1.55.0/hk-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/hk/releases/assets/510729669"
+checksum = "sha256:1ed0259505fab94bc4f90b42f36e38b61b316c20f2f6f7589d0b090cc42068d3"
+checksum_source = "mise-versions"
+url = "https://github.com/jdx/hk/releases/download/v2.9.0/hk-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/hk/releases/assets/679482745"
 
 [tools.hk."platforms.linux-arm64-musl"]
-checksum = "sha256:21eccba81a4b9ac73431d876d8ed5add16a01df360f6d3d576279903254599f6"
-url = "https://github.com/jdx/hk/releases/download/v1.55.0/hk-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/hk/releases/assets/510729671"
+checksum = "sha256:1ed0259505fab94bc4f90b42f36e38b61b316c20f2f6f7589d0b090cc42068d3"
+checksum_source = "mise-versions"
+url = "https://github.com/jdx/hk/releases/download/v2.9.0/hk-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/hk/releases/assets/679482745"
 
 [tools.hk."platforms.linux-x64"]
-checksum = "sha256:efd6ed276ae8a26cc95fcb8c83051d9a3fd05e124d38170c0f057a716e9de94d"
-url = "https://github.com/jdx/hk/releases/download/v1.55.0/hk-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/hk/releases/assets/510729679"
+checksum = "sha256:db1021a8920b71c161e26bef246c5b00a3ea6aa480b6cb837ee098ffeb8c41a1"
+checksum_source = "mise-versions"
+url = "https://github.com/jdx/hk/releases/download/v2.9.0/hk-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/hk/releases/assets/679482780"
 
 [tools.hk."platforms.linux-x64-musl"]
-checksum = "sha256:f00e04f536bec16bbc8c7cf8696f834d6ad80ddbcc1e653e3110d12ee4de2b42"
-url = "https://github.com/jdx/hk/releases/download/v1.55.0/hk-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/hk/releases/assets/510729680"
+checksum = "sha256:db1021a8920b71c161e26bef246c5b00a3ea6aa480b6cb837ee098ffeb8c41a1"
+checksum_source = "mise-versions"
+url = "https://github.com/jdx/hk/releases/download/v2.9.0/hk-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/hk/releases/assets/679482780"
 
 [tools.hk."platforms.macos-arm64"]
-checksum = "sha256:a995ff68402bcf6c16ab054e4c45db592213bcd661c9b92003d4a62f2d56d4b1"
-url = "https://github.com/jdx/hk/releases/download/v1.55.0/hk-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/jdx/hk/releases/assets/510729670"
+checksum = "sha256:c7c4d85fd44e88d54b2bf8f9fc38165e278983f54210c095a3e3e8c593e4b720"
+checksum_source = "mise-versions"
+url = "https://github.com/jdx/hk/releases/download/v2.9.0/hk-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/jdx/hk/releases/assets/679482743"
 
 [tools.hk."platforms.windows-x64"]
-checksum = "sha256:402b3c9c5f9a5b3cb8ab6229d0f6d169b122fc3db1e39fc2fa53421a1aa24fc5"
-url = "https://github.com/jdx/hk/releases/download/v1.55.0/hk-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/jdx/hk/releases/assets/510729674"
+checksum = "sha256:f0b6f181eecd9c784901122a3d4be15bb13156a839b36021a173b366756804dd"
+checksum_source = "mise-versions"
+url = "https://github.com/jdx/hk/releases/download/v2.9.0/hk-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/jdx/hk/releases/assets/679482741"
 
 [[tools.node]]
 version = "26.8.2"
