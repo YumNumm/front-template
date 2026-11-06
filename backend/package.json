@@ -16,9 +16,9 @@
     "deploy": "wrangler deploy"
   },
   "dependencies": {
-    "better-auth": "^1.6.27",
+    "better-auth": "^1.7.7",
     "drizzle-orm": "^0.45.2",
-    "hono": "^4.13.1"
+    "hono": "^4.13.11"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260812.1",

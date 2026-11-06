@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@front-template/backend": "workspace:*",
-    "hono": "^4.13.1"
+    "hono": "^4.13.11"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260812.1",
